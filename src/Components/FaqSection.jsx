@@ -6,8 +6,10 @@ import {
   Box,
   Container,
   Typography,
+  Stack,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useReducer, useEffect } from "react";
+import FadeIn from "./FadeIn";
 
 const faqItems = [
   {
@@ -44,6 +46,12 @@ const faqItems = [
 
 const FaqSection = () => {
   const [expanded, setExpanded] = useState(false);
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+  // Force a re-render when component mounts
+  useEffect(() => {
+    forceUpdate();
+  }, []);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -56,7 +64,7 @@ const FaqSection = () => {
         flexDirection: "column",
         alignItems: "center",
         px: { xs: 4, sm: 8, md: 10 },
-        py: { xs: 10, md: 16 }, // Increased bottom padding
+        my: 20, // Adding 80px margin top and bottom (20 units * 4px)
         width: "100%",
         bgcolor: "background.default",
       }}
@@ -97,7 +105,7 @@ const FaqSection = () => {
                 bgcolor: "transparent",
                 backgroundImage: "none",
                 borderBottom: 1,
-                borderColor: "divider",
+                borderColor: "lightGrey",
                 "&:before": {
                   display: "none",
                 },
@@ -107,6 +115,7 @@ const FaqSection = () => {
                 },
                 "& .MuiAccordionSummary-root": {
                   py: 2.5,
+                  px: 2, // Add horizontal padding
                   minHeight: "auto",
                   "&.Mui-expanded": {
                     minHeight: "auto",
@@ -118,7 +127,6 @@ const FaqSection = () => {
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon sx={{ width: 16, height: 16 }} />}
                 sx={{
-                  px: 0,
                   "& .MuiAccordionSummary-content": {
                     margin: 0,
                     "&.Mui-expanded": {
@@ -130,15 +138,15 @@ const FaqSection = () => {
                 <Typography
                   sx={{
                     fontWeight: 500,
-                    color: "text.primary",
-                    fontSize: "0.95rem", // Slightly reduced question text size
+                    color: "lightText",
+                    fontSize: "0.95rem",
                     lineHeight: 1.6,
                   }}
                 >
                   {item.question}
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails sx={{ px: 0, py: 1.5 }}>
+              <AccordionDetails sx={{ px: 2, py: 1.5 }}>
                 <Typography
                   variant="body2"
                   sx={{ color: "text.secondary", fontSize: "0.85rem" }} // Slightly reduced answer text size

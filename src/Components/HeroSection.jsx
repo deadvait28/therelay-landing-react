@@ -1,40 +1,63 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import React from "react";
-import image4 from "../assets/images/heroimage.png"; // Import the image
+import React, { useReducer, useEffect } from "react";
+import image4 from "../assets/images/Hero updated.png"; // Import the image
 
 const HeroSection = () => {
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+  // Force a re-render when component mounts
+  useEffect(() => {
+    forceUpdate();
+  }, []);
+
   // Data for the hero section
   const heroData = {
-    title: "Make your apps do the work you hate",
+    title: "Your command center to work across all your enterprise apps",
     description:
-      "Bring all your work apps together. Chat, automate, and get work done right from your phone with The Relay",
-    buttonText: "Join Waitlist",
+      "Save upto 1.8 hours a day by connecting all your work apps together. Chat, automate, and get work done for you across siloed apps today",
+    buttonText: "Get Early Access",
     image: image4,
   };
 
+  // You can call forceUpdate() whenever you need to force a re-render
+  
   return (
     <Box
+      key={heroData.title}
       sx={{
         display: "flex",
-        flexDirection: { xs: "column-reverse", md: "row" },
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         maxWidth: "1312px",
         width: "100%",
-        minHeight: "100vh",
         px: { xs: 3, sm: 6, md: 8 },
-        pt: 2,  // Removes top padding
-        pb: { xs: 8, md: 12 },
+        my: 20,
         gap: { xs: 4, md: 8 },
         bgcolor: "background.default",
         position: "relative",
       }}
     >
-      <Stack
-        spacing={3}
+      <Box
+        component="img"
+        src={heroData.image}
+        alt="Phone displaying app interface"
+        key={Date.now()}
         sx={{
-          maxWidth: { xs: "100%", md: "50%" },
-          textAlign: { xs: "center", md: "left" },
+          width: "100%",
+          maxWidth: "1200px",
+          height: "auto",
+          objectFit: "contain",
+          mb: 10
+        }}
+      />
+
+      <Stack
+        sx={{
+          width: "100%",
+          maxWidth: "800px",
+          textAlign: "center",
+          alignItems: "center"
         }}
       >
         <Typography
@@ -43,7 +66,8 @@ const HeroSection = () => {
             fontWeight: 600,
             color: "sand.2",
             fontSize: { xs: "32px", sm: "40px", md: "48px" },
-            lineHeight: { xs: "40px", sm: "56px", md: "72px" },
+            lineHeight: 1,
+            textAlign: "center"
           }}
         >
           {heroData.title}
@@ -55,6 +79,11 @@ const HeroSection = () => {
             color: "text.secondary",
             fontSize: { xs: "16px", sm: "18px" },
             px: { xs: 2, md: 0 },
+            fontWeight: 400,
+            lineHeight: { xs: "24px", sm: "28px" },
+            letterSpacing: "0.15px",
+            mt: 2,
+            textAlign: "center"
           }}
         >
           {heroData.description}
@@ -67,32 +96,22 @@ const HeroSection = () => {
             width: { xs: "100%", sm: "300px" },
             height: "48px",
             borderRadius: "8px",
-                background:
-                  "linear-gradient(180deg, rgba(248,247,244,1) 0%, rgba(154,148,118,1) 100%)",
-                color: "sand.7",
-                fontWeight: 600,
-                boxShadow: "0 0 10px rgba(255, 255, 255, 0.3)",
-                "&:hover": {
-                  background:
-                    "linear-gradient(180deg, rgba(248,247,244,0.9) 0%, rgba(154,148,118,0.9) 100%)",
-                },
+            mt: 6,
+            background:
+              "linear-gradient(180deg, rgba(248,247,244,1) 0%, rgba(154,148,118,1) 100%)",
+            color: "sand.7",
+            fontWeight: 600,
+            boxShadow: "0 4px 8px rgba(214, 210, 188, 0.8)",
+            "&:hover": {
+              background:
+                "linear-gradient(180deg, rgba(248,247,244,0.9) 0%, rgba(154,148,118,0.9) 100%)",
+              boxShadow: "0 4px 8px rgba(214, 210, 188, 1)",
+            },
           }}
         >
           {heroData.buttonText}
         </Button>
       </Stack>
-
-      <Box
-        component="img"
-        src={heroData.image}
-        alt="Phone displaying app interface"
-        sx={{
-          width: { xs: "90%", sm: "70%", md: "50%" },
-          maxWidth: "609px",
-          height: "auto",
-          objectFit: "contain",
-        }}
-      />
     </Box>
   );
 };
